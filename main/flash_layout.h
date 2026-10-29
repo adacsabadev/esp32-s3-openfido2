@@ -1,0 +1,12 @@
+#pragma once
+
+#include "flash_storage.h"
+
+#define FLASH_STORAGE_JOURNAL_START \
+    flash_storage_region_start(FLASH_STORAGE_JOURNAL)
+#define FLASH_STORAGE_JOURNAL_BYTES FLASH_STORAGE_BANK_BYTES
+#define FLASH_STORAGE_SNAPSHOT_START \
+    flash_storage_region_start(FLASH_STORAGE_SNAPSHOT)
+#define FLASH_STORAGE_SNAPSHOT_BYTES FLASH_STORAGE_BANK_BYTES
+
+#define FLASH_STORAGE_HAS_LEGACY 0

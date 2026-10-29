@@ -1,0 +1,9 @@
+/build/
+/build-ble/
+/managed_components/
+/sdkconfig
+/sdkconfig.ble
+/sdkconfig.old
+__pycache__/
+*.pyc
+*.log

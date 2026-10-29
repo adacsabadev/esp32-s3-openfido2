@@ -1,0 +1,41 @@
+idf_component_register(
+    SRCS
+        "main.c"
+        "ble_fido.c"
+        "cbor_min.c"
+        "credential.c"
+        "credential_store.c"
+        "cred_mgmt.c"
+        "ctap2.c"
+        "ctaphid.c"
+        "debug_console.c"
+        "fido2.c"
+        "flash_storage_esp.c"
+        "fido_ble_framing.c"
+        "indicators.c"
+        "log.c"
+        "pin_uv.c"
+        "pin_token.c"
+        "platform.c"
+        "usb_composite.c"
+        "u2f.c"
+        "u2f_attestation.c"
+    INCLUDE_DIRS "."
+    REQUIRES
+        bootloader_support
+        bt
+        esp_app_format
+        esp_common
+        esp_driver_gpio
+        esp_driver_uart
+        esp_hw_support
+        esp_partition
+        esp_timer
+        esp_tinyusb
+        freertos
+        led_strip
+        log
+        mbedtls # ESP-IDF's PSA provider and Espressif hardware drivers
+        nvs_flash
+        spi_flash
+)
