@@ -82,7 +82,9 @@ RAM-only when changing PIN handling. See [project memory](MEMORY.md).
 The primary board is the YD-ESP32-23 clone described in the repository's
 `COOPER.md`:
 
-- Native USB OTG is the preferred connection for HID and CDC.
+- Native USB OTG exposes the FIDO HID interface only.
+- The diagnostic console uses the board's separate FTDI UART connection
+  (COM6); this firmware does not expose a native USB CDC interface.
 - GPIO0 (BOOT) is the physical user-presence button. A fresh press is required
   for operations that request user presence.
 - GPIO48 drives the onboard addressable RGB LED for presence and status.
@@ -102,11 +104,13 @@ Build from this project directory with ESP-IDF 6.1:
 idf.py build
 ```
 
-The project uses ESP-IDF's `esp_tinyusb` component for composite USB HID/CDC,
+The project uses ESP-IDF's `esp_tinyusb` component for the FIDO HID interface,
 an optional ESP-NimBLE encrypted FIDO BLE GATT transport (currently disabled),
 Espressif's `led_strip` component for the board LED, and the ESP-IDF PSA
 cryptography stack (`psa/crypto.h`) for P-256, AES-CBC, HMAC-SHA256, and
-SHA-256.
+SHA-256. Unlike `stm32-openfido2`, which carries its diagnostic console over
+USB CDC because the STM32 hardware has only one USB connection, this ESP32-S3
+project keeps the console on the board's separate FTDI UART port.
 
 Cryptography uses ESP-IDF's own PSA Crypto provider, supplied by its `mbedtls`
 component. There is no project-vendored crypto implementation. The defaults
