@@ -9,10 +9,9 @@ repository.
 native USB COM7, then reset through COM6 RTS. See [project memory](MEMORY.md)
 for the verified commands and USB device identities.
 
-This is an ESP-IDF port of
-[`stm32-openfido2`](https://github.com/adacsabadev/stm32-openfido2) for
-ESP32-S3. The project exposes a FIDO HID authenticator over native USB OTG and
-a two-way diagnostic console exclusively over the FTDI UART monitoring port.
+This is ESP-IDF firmware for ESP32-S3. The project exposes a FIDO HID
+authenticator over native USB OTG and a two-way diagnostic console exclusively
+over the FTDI UART monitoring port.
 
 This is a research prototype, not hardened security-key firmware. Do not
 register important accounts or store important credentials with it. The default
@@ -108,21 +107,18 @@ The project uses ESP-IDF's `esp_tinyusb` component for the FIDO HID interface,
 an optional ESP-NimBLE encrypted FIDO BLE GATT transport (currently disabled),
 Espressif's `led_strip` component for the board LED, and the ESP-IDF PSA
 cryptography stack (`psa/crypto.h`) for P-256, AES-CBC, HMAC-SHA256, and
-SHA-256. Unlike `stm32-openfido2`, which carries its diagnostic console over
-USB CDC because the STM32 hardware has only one USB connection, this ESP32-S3
-project keeps the console on the board's separate FTDI UART port.
+SHA-256. The diagnostic console stays on the board's separate FTDI UART port.
 
 Cryptography uses ESP-IDF's own PSA Crypto provider, supplied by its `mbedtls`
 component. There is no project-vendored crypto implementation. The defaults
 explicitly enable Espressif's hardware AES, SHA and MPI drivers. The ESP32-S3
 does not have the dedicated ECC/ECDSA peripherals available on some other ESP
 targets, so P-256 signing and ECDH still require software operations. Keeping
-the IDF `mbedtls` dependency is necessary for this provider; it does not select
-the old standalone Mbed TLS sources from the STM32 port.
+the IDF `mbedtls` dependency is necessary for this provider.
 
 The application enables the ESP32-S3 hardware RNG entropy source before
-generating keys. The reference project's STM32F411 research PRNG is not used.
-Do not enable another ADC/RF client while relying on this entropy source.
+generating keys. Do not enable another ADC/RF client while relying on this
+entropy source.
 
 ## USB and setup
 
@@ -258,14 +254,11 @@ environment. This temporarily deletes one active key, compacts, resets the
 board, undeletes that key, and resets again. It verifies counts, counter and PIN
 status and saves the raw serial transcript under `logs/`.
 
-The USB VID/PID is inherited from the STM32 reference for lab compatibility.
-Do not distribute this identity in a product; use a VID/PID assigned to your
-project before distribution.
+The USB VID/PID is retained for lab compatibility. Do not distribute this
+identity in a product; use a VID/PID assigned to your project before
+distribution.
 
-## Attribution
+## License
 
-The portable CTAP2, CTAPHID, CBOR, credential-journal, PIN/UV, and diagnostic
-console code is adapted from
-[adacsabadev/stm32-openfido2](https://github.com/adacsabadev/stm32-openfido2),
-licensed under Apache-2.0; see [LICENSE](./LICENSE). ESP-IDF and its managed
-components retain their respective licenses.
+This project is licensed under Apache-2.0; see [LICENSE](./LICENSE). ESP-IDF and
+its managed components retain their respective licenses.
