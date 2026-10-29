@@ -1,12 +1,16 @@
 # ESP32-S3 OpenFIDO2
 
-This checkout is the unstable development branch for ESP32-S3 bring-up.
+This repository is the stable ESP32-S3 OpenFIDO2 firmware line. Changes are
+promoted here after development and validation in the separate
+[`esp32-s3-openfido2-unstable`](https://github.com/adacsabadev/esp32-s3-openfido2-unstable)
+repository.
 
 **Programming workflow:** use COM6 DTR/RTS to enter download mode, flash through
 native USB COM7, then reset through COM6 RTS. See [project memory](MEMORY.md)
 for the verified commands and USB device identities.
 
-An experimental ESP-IDF port of the adjacent `stm32-openfido2` project for
+This is an ESP-IDF port of
+[`stm32-openfido2`](https://github.com/adacsabadev/stm32-openfido2) for
 ESP32-S3. The project exposes a FIDO HID authenticator over native USB OTG and
 a two-way diagnostic console exclusively over the FTDI UART monitoring port.
 
@@ -248,7 +252,7 @@ For a reversible test on a connected lab device, stop its serial monitor and run
 `python tests/storage/device_check.py --exercise` using the ESP-IDF Python
 environment. This temporarily deletes one active key, compacts, resets the
 board, undeletes that key, and resets again. It verifies counts, counter and PIN
-status and saves the raw serial transcript under the parent lab's `logs/`.
+status and saves the raw serial transcript under `logs/`.
 
 The USB VID/PID is inherited from the STM32 reference for lab compatibility.
 Do not distribute this identity in a product; use a VID/PID assigned to your
